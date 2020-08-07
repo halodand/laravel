@@ -120,6 +120,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('bank_access')
+                            <li class="{{ request()->is('admin/banks') || request()->is('admin/banks/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.banks.index") }}">
+                                    <i class="fa-fw fas fa-cogs">
+
+                                    </i>
+                                    <span>{{ trans('cruds.bank.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan
@@ -162,6 +173,41 @@
 
                                     </i>
                                     <span>{{ trans('cruds.contentPage.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+            @can('user_menu_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-cogs">
+
+                        </i>
+                        <span>{{ trans('cruds.userMenu.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('bankuser_access')
+                            <li class="{{ request()->is('admin/bankusers') || request()->is('admin/bankusers/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.bankusers.index") }}">
+                                    <i class="fa-fw fas fa-cogs">
+
+                                    </i>
+                                    <span>{{ trans('cruds.bankuser.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('currency_user_access')
+                            <li class="{{ request()->is('admin/currency-users') || request()->is('admin/currency-users/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.currency-users.index") }}">
+                                    <i class="fa-fw fas fa-cogs">
+
+                                    </i>
+                                    <span>{{ trans('cruds.currencyUser.title') }}</span>
 
                                 </a>
                             </li>

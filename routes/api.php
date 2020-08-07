@@ -33,4 +33,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Content Pages
     Route::post('content-pages/media', 'ContentPageApiController@storeMedia')->name('content-pages.storeMedia');
     Route::apiResource('content-pages', 'ContentPageApiController');
+
+    // Banks
+    Route::apiResource('banks', 'BankApiController');
+
+    // Bankusers
+    Route::apiResource('bankusers', 'BankuserApiController');
+
+    // Currency Users
+    Route::apiResource('currency-users', 'CurrencyUserApiController');
 });

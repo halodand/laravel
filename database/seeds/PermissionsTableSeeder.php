@@ -230,6 +230,70 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 56,
+                'title' => 'bank_create',
+            ],
+            [
+                'id'    => 57,
+                'title' => 'bank_edit',
+            ],
+            [
+                'id'    => 58,
+                'title' => 'bank_show',
+            ],
+            [
+                'id'    => 59,
+                'title' => 'bank_delete',
+            ],
+            [
+                'id'    => 60,
+                'title' => 'bank_access',
+            ],
+            [
+                'id'    => 61,
+                'title' => 'user_menu_access',
+            ],
+            [
+                'id'    => 62,
+                'title' => 'bankuser_create',
+            ],
+            [
+                'id'    => 63,
+                'title' => 'bankuser_edit',
+            ],
+            [
+                'id'    => 64,
+                'title' => 'bankuser_show',
+            ],
+            [
+                'id'    => 65,
+                'title' => 'bankuser_delete',
+            ],
+            [
+                'id'    => 66,
+                'title' => 'bankuser_access',
+            ],
+            [
+                'id'    => 67,
+                'title' => 'currency_user_create',
+            ],
+            [
+                'id'    => 68,
+                'title' => 'currency_user_edit',
+            ],
+            [
+                'id'    => 69,
+                'title' => 'currency_user_show',
+            ],
+            [
+                'id'    => 70,
+                'title' => 'currency_user_delete',
+            ],
+            [
+                'id'    => 71,
+                'title' => 'currency_user_access',
+            ],
+            [
+                'id'    => 72,
                 'title' => 'profile_password_edit',
             ],
         ];
