@@ -66,6 +66,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('content-pages/media', 'ContentPageController@storeMedia')->name('content-pages.storeMedia');
     Route::post('content-pages/ckmedia', 'ContentPageController@storeCKEditorImages')->name('content-pages.storeCKEditorImages');
     Route::resource('content-pages', 'ContentPageController');
+
+    // Banks
+    Route::delete('banks/destroy', 'BankController@massDestroy')->name('banks.massDestroy');
+    Route::post('banks/parse-csv-import', 'BankController@parseCsvImport')->name('banks.parseCsvImport');
+    Route::post('banks/process-csv-import', 'BankController@processCsvImport')->name('banks.processCsvImport');
+    Route::resource('banks', 'BankController');
+
+    // Bankusers
+    Route::delete('bankusers/destroy', 'BankuserController@massDestroy')->name('bankusers.massDestroy');
+    Route::resource('bankusers', 'BankuserController');
+
+    // Currency Users
+    Route::delete('currency-users/destroy', 'CurrencyUserController@massDestroy')->name('currency-users.massDestroy');
+    Route::resource('currency-users', 'CurrencyUserController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password
