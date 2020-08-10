@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Transaction;
 use Gate;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTransactionRequest extends FormRequest
 {
@@ -19,7 +18,7 @@ class StoreTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            'bank_id'            => [
+            'bank_id' => [
                 'required',
                 'integer',
             ],
@@ -27,22 +26,22 @@ class StoreTransactionRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'nilai_depo_id'      => [
+            'nilai_depo_id' => [
+                'nullable',
+                'integer',
+            ],
+            'kurs_wd_id' => [
+                'nullable',
+                'integer',
+            ],
+            'jumlahusd_id' => [
                 'required',
                 'integer',
             ],
-            'kurs_wd_id'         => [
-                'required',
-                'integer',
-            ],
-            'jumlahusd_id'       => [
-                'required',
-                'integer',
-            ],
-            'total'              => [
+            'total' => [
                 'required',
             ],
-            'diproses_id'        => [
+            'diproses_id' => [
                 'required',
                 'integer',
             ],
