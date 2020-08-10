@@ -14,6 +14,11 @@ Route::group([
         Route::get('user', 'AuthController@user');
     });
 });
+Route::group(['prefix' => 'v1', 'middleware' => 'auth:api', 'namespace' => 'Api\V1\Admin'], function () {
+    Route::get('bankusers/options', 'BankuserApiController@getOptions');
+    Route::get('currency-users/options', 'CurrencyUserApiController@getOptions');
+    Route::get('transactions/options', 'TransactionApiController@getOptions');
+});
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');

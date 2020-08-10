@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use Gate;
+use App\Models\User;
+use App\Models\Currency;
+use App\Models\CurrencyUser;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\StoreCurrencyUserRequest;
 use App\Http\Requests\UpdateCurrencyUserRequest;
 use App\Http\Resources\Admin\CurrencyUserResource;
-use App\Models\CurrencyUser;
-use Gate;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class CurrencyUserApiController extends Controller
 {
@@ -52,5 +54,15 @@ class CurrencyUserApiController extends Controller
         $currencyUser->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function getOptions()
+    {
+        $partners = User::whereHas('roles', function (Builder $q) {
+            $q->where('title', 'LIKE', 'Admin');
+        })->get();
+        $currencies = Currency::get();
+
+        return \response()->json(\compact('partners', 'currencies'));
     }
 }

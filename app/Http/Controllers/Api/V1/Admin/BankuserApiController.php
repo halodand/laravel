@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use Gate;
+use App\Models\Bank;
+use App\Models\User;
+use App\Models\Bankuser;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreBankuserRequest;
 use App\Http\Requests\UpdateBankuserRequest;
 use App\Http\Resources\Admin\BankuserResource;
-use App\Models\Bankuser;
-use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BankuserApiController extends Controller
@@ -52,5 +54,15 @@ class BankuserApiController extends Controller
         $bankuser->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function getOptions()
+    {
+        $partners = User::whereHas('roles', function (Builder $q) {
+            $q->where('title', 'LIKE', 'Admin');
+        })->get();
+        $banks = Bank::get();
+
+        return \response()->json(\compact('partners', 'banks'));
     }
 }

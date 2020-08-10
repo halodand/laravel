@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\CsvImportTrait;
-use App\Http\Requests\MassDestroyTransactionRequest;
-use App\Http\Requests\StoreTransactionRequest;
-use App\Http\Requests\UpdateTransactionRequest;
-use App\Models\Currency;
-use App\Models\Team;
-use App\Models\Transaction;
-use App\Models\User;
 use Gate;
+use App\Models\Team;
+use App\Models\User;
+use App\Models\Currency;
+use App\Mail\OrderShipped;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Database\Eloquent\Builder;
+use App\Http\Requests\StoreTransactionRequest;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Requests\UpdateTransactionRequest;
+use App\Http\Requests\MassDestroyTransactionRequest;
 
 class TransactionController extends Controller
 {
@@ -180,6 +183,14 @@ class TransactionController extends Controller
     public function update(UpdateTransactionRequest $request, Transaction $transaction)
     {
         $transaction->update($request->all());
+
+        $admins = User::select('email')->whereHas('roles', function (Builder $q) {
+            $q->where('title', 'LIKE', 'Admin');
+        })->get()->pluck('email');
+
+        Mail::to($transaction->diproses->email)
+            ->cc($admins)
+            ->send(new OrderShipped([]));
 
         return redirect()->route('admin.transactions.index');
     }
