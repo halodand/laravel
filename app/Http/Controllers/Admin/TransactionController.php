@@ -28,16 +28,16 @@ class TransactionController extends Controller
         abort_if(Gate::denies('transaction_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Transaction::with(['id_partner', 'jenis_currency', 'bank', 'currency_member', 'nilai_depo', 'kurs_wd', 'diskon', 'jumlahusd', 'diproses', 'team'])->select(sprintf('%s.*', (new Transaction)->table));
+            $query = Transaction::with(['id_partner', 'jenis_currency', 'bank', 'currency_member', 'nilai_depo', 'kurs_wd', 'diskon', 'jumlahusd', 'diproses', 'team'])->select(sprintf('%s.*', (new Transaction())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'transaction_show';
-                $editGate      = 'transaction_edit';
-                $deleteGate    = 'transaction_delete';
+                $viewGate = 'transaction_show';
+                $editGate = 'transaction_edit';
+                $deleteGate = 'transaction_delete';
                 $crudRoutePart = 'transactions';
 
                 return view('partials.datatablesActions', compact(
@@ -50,10 +50,10 @@ class TransactionController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('no_order', function ($row) {
-                return $row->no_order ? $row->no_order : "";
+                return $row->no_order ? $row->no_order : '';
             });
             $table->addColumn('id_partner_name', function ($row) {
                 return $row->id_partner ? $row->id_partner->name : '';
@@ -100,10 +100,10 @@ class TransactionController extends Controller
                 return $row->jumlahusd ? (is_string($row->jumlahusd) ? $row->jumlahusd : $row->jumlahusd->max_trans) : '';
             });
             $table->editColumn('total', function ($row) {
-                return $row->total ? $row->total : "";
+                return $row->total ? $row->total : '';
             });
             $table->editColumn('ket', function ($row) {
-                return $row->ket ? $row->ket : "";
+                return $row->ket ? $row->ket : '';
             });
             $table->editColumn('status', function ($row) {
                 return $row->status ? Transaction::STATUS_SELECT[$row->status] : '';
@@ -117,16 +117,16 @@ class TransactionController extends Controller
             return $table->make(true);
         }
 
-        $users      = User::get();
+        $users = User::get();
         $currencies = Currency::get();
-        $users      = User::get();
-        $users      = User::get();
-        $currencies = Currency::get();
-        $currencies = Currency::get();
+        $users = User::get();
+        $users = User::get();
         $currencies = Currency::get();
         $currencies = Currency::get();
-        $users      = User::get();
-        $teams      = Team::get();
+        $currencies = Currency::get();
+        $currencies = Currency::get();
+        $users = User::get();
+        $teams = Team::get();
 
         return view('admin.transactions.index', compact('users', 'currencies', 'users', 'users', 'currencies', 'currencies', 'currencies', 'currencies', 'users', 'teams'));
     }
@@ -190,7 +190,7 @@ class TransactionController extends Controller
 
         Mail::to($transaction->diproses->email)
             ->cc($admins)
-            ->send(new OrderShipped([]));
+            ->send(new OrderShipped($transaction));
 
         return redirect()->route('admin.transactions.index');
     }

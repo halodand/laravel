@@ -37,7 +37,7 @@ class TransactionApiController extends Controller
 
         Mail::to($transaction->diproses->email)
             ->cc($admins)
-            ->send(new OrderShipped([]));
+            ->send(new OrderShipped($transaction));
 
         return (new TransactionResource($transaction))
             ->response()
